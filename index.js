@@ -27,16 +27,21 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:timestamp", function (req, res) {
 
   var valid = (new Date(req.params.timestamp)).getTime() > 0;
-  var timestamp = new Date(req.params.timestamp).getTime() / 1000;
+  var timestamp_from_date = new Date(req.params.timestamp).getTime() / 1000;
 
   if(!valid){
-    var date = new Date(req.params.timestamp * 1000);
-    res.json({unix: req.params.timestamp, utc: date.toUTCString()});
-    console.log("timestamp")
-  }else{
+    orig_timestamp = req.params.timestamp;
+    timestamp = req.params.timestamp;
+
+    if(timestamp.length > 10){
+      timestamp = timestamp.slice(0, 10)
+    }
+
     var date = new Date(timestamp * 1000);
-    res.json({unix: timestamp, utc: date.toUTCString()});
-    console.log("date string")
+    res.json({unix: orig_timestamp, utc: date.toUTCString()});
+  }else{
+    var date = new Date(timestamp_from_date * 1000);
+    res.json({unix: timestamp_from_date, utc: date.toUTCString()});
   }
   
 });
