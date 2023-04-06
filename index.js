@@ -30,18 +30,13 @@ app.get("/api/:timestamp", function (req, res) {
   var timestamp_from_date = new Date(req.params.timestamp).getTime() / 1000;
 
   if(!valid){
-    orig_timestamp = req.params.timestamp;
-    timestamp = req.params.timestamp;
-
-    if(timestamp.length > 10){
-      timestamp = timestamp.slice(0, 10)
-    }
-
-    var date = new Date(timestamp * 1000);
-    res.json({unix: orig_timestamp, utc: date.toUTCString()});
+    timestamp = req.params.timestamp/1000
+    console.log(timestamp)
+    var date = new Date(timestamp*1000);
+    res.json({unix: timestamp*1000, utc: date.toUTCString()});
   }else{
     var date = new Date(timestamp_from_date * 1000);
-    res.json({unix: timestamp_from_date, utc: date.toUTCString()});
+    res.json({unix: timestamp_from_date*1000, utc: date.toUTCString()});
   }
   
 });
