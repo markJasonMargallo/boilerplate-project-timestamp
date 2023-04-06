@@ -26,7 +26,7 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api", function (req, res) {
   const timestamp = new Date().getTime() / 1000;
-  res.json({unix: (timestamp*1000).toString(), utc: (new Date()).toUTCString()});
+  res.json({unix: (timestamp*1000), utc: (new Date()).toUTCString()});
 });
 
 app.get("/api/:timestamp", function (req, res) {
@@ -39,12 +39,12 @@ app.get("/api/:timestamp", function (req, res) {
     const timestamp = req.params.timestamp/1000
 
     var date = new Date(timestamp*1000);
-    res.json({unix: (timestamp*1000).toString(), utc: date.toUTCString()});
+    res.json({unix: (timestamp*1000), utc: date.toUTCString()});
   }
   if(isValidDate){
 
     var date = new Date(timestamp_from_date * 1000);
-    res.json({unix: (timestamp_from_date*1000).toString(), utc: date.toUTCString()});
+    res.json({unix: (timestamp_from_date*1000), utc: date.toUTCString()});
   }
   if(!isValidDate && !isValidTimestamp){
     res.json({ error : "Invalid Date" })
